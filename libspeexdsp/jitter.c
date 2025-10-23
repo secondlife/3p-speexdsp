@@ -363,7 +363,7 @@ static void shift_timings(JitterBuffer *jitter, spx_int16_t amount)
 
 
 /** Put one packet into the jitter buffer */
-EXPORT void jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *packet)
+EXPORT int jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *packet)
 {
    int i,j;
    int late;
@@ -454,9 +454,10 @@ EXPORT void jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *pa
          jitter->arrival[i] = 0;
       else
          jitter->arrival[i] = jitter->next_stop;
+      
+      return JITTER_BUFFER_OK;
    }
-
-
+   return JITTER_BUFFER_LATE;
 }
 
 /** Get one packet from the jitter buffer */

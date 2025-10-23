@@ -72,6 +72,8 @@ struct _JitterBufferPacket {
 #define JITTER_BUFFER_MISSING 1
 /** A "fake" packet is meant to be inserted here to increase buffering */
 #define JITTER_BUFFER_INSERTION 2
+/** A packet was too late to insert into the buffer */
+#define JITTER_BUFFER_LATE 3
 /** There was an error in the jitter buffer */
 #define JITTER_BUFFER_INTERNAL_ERROR -1
 /** Invalid argument */
@@ -140,7 +142,7 @@ void jitter_buffer_destroy(JitterBuffer *jitter);
  * @param jitter Jitter buffer state
  * @param packet Incoming packet
 */
-void jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *packet);
+int jitter_buffer_put(JitterBuffer *jitter, const JitterBufferPacket *packet);
 
 /** Get one packet from the jitter buffer
  *
